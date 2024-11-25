@@ -30,17 +30,17 @@ Feature: Venta con Despacho desde CEDIS
       | 8-99-887 | test 1 | 66998877 |
     And  le damos click en "guardar"
     Then Volvemos al inicio
-#
-#  Scenario: Confirmar Pre-Orden
-#    When Entramos en la Gestion de Ventas con Despacho desde CEDIS
-#    Then Entramos en Crear Solicitud
-#    And  Seleccionamos Chitre
-#    And  Ingresamos la Cédula del cliente
-#    And  le damos click en Cargar
-#    Then le damos click en Finalizar para confirmar la Orden
-#    And  Escaneamos la Factura
-#    And  Completamos el formulario para el envío a Domicilio
-#    And  le damos click en Guardar
-#    Then le damos click en Continuar
+
+  Scenario: Confirmar Pre-Orden
+    When Entramos en la Gestion de Ventas con Despacho desde CEDIS
+    Then Entramos en Crear Solicitud
+    And  Seleccionamos Chitre
+    And  Ingresamos la Cédula del cliente
+    And  le damos click en Cargar
+    Then le damos click en Finalizar para confirmar la Orden
+    And  Escaneamos la Factura
+    And  Completamos el formulario para el envío a Domicilio
+    And  le damos click en Guardar
+    Then le damos click en Continuar
 
 

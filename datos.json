@@ -1,0 +1,6 @@
+{
+  "usuario": "6334",
+  "clave": "Shalom2021",
+  "recibo": "(//div[@class='card-menu '][contains(.,'Gestión de Recibo')])[1]",
+  "bultoDev": ""
+}

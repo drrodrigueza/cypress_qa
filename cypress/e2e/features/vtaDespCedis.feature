@@ -42,5 +42,5 @@ Feature: Venta con Despacho desde CEDIS
     And  Completamos el formulario para el envío a Domicilio
     And  le damos click en Guardar
     Then le damos click en Continuar
-    Then Volvemos al inicio
+
 

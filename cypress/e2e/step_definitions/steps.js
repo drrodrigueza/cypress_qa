@@ -233,56 +233,52 @@ Then("Escaneamos el bulto Devolución",()=> {
 // ########### steps Módulo de Venta con Despacho desde CEDIS ###########
 
 When("Entramos en la Gestion de Ventas con Despacho desde CEDIS",()=> {
-    vtaDespCedisPage.clickVtaDespacho()
+    vtaDespCedisPage.clickElement('vtaDespachoBtn')
     cy.wait(1500)
 })
 Then ("Entramos en Crear Solicitud",()=> {
-    vtaDespCedisPage.clickCrearSol()
+    vtaDespCedisPage.clickElement('crearSolBtn')
     cy.wait(1500)
 })
 Then("le damos click en {string}", (boton) => {
     try {
         const botones = {
-            Buscar_Materiales: vtaDespCedisPage.clickBuscarMat.bind(vtaDespCedisPage),
-            la_Lupa: vtaDespCedisPage.clickBuscarIcon.bind(vtaDespCedisPage),
-            el_Gancho_verde: vtaDespCedisPage.clickAgregarMat.bind(vtaDespCedisPage),
-            el_carrito: vtaDespCedisPage.clickCarritoIcon.bind(vtaDespCedisPage),
-            Almacen: vtaDespCedisPage.clickAlmacen.bind(vtaDespCedisPage),
-            CEDIS: vtaDespCedisPage.clickCedis.bind(vtaDespCedisPage),
-            Guardar: vtaDespCedisPage.clickGuardar.bind(vtaDespCedisPage),
-            Delivery: vtaDespCedisPage.clickDelivery.bind(vtaDespCedisPage),
-            Opcion: vtaDespCedisPage.clickOpcion.bind(vtaDespCedisPage),
-            Imprimir_Proforma: vtaDespCedisPage.clickImprimirProf.bind(vtaDespCedisPage),
-            guardar: vtaDespCedisPage.clickGuardarBtn.bind(vtaDespCedisPage)
+            Buscar_Materiales: 'buscarMatBtn',
+            la_Lupa: 'buscarIconBtn',
+            el_Gancho_verde: 'agregarMatBtn',
+            el_carrito: 'carritoIconBtn',
+            Almacen: 'almacenBtn',
+            CEDIS: 'cedisBtn',
+            Guardar: 'guardarBtn',
+            Opcion: 'opcionBtn',
+            Imprimir_Proforma: 'imprimirProfBtn',
+            guardar: 'GuardarBtn',
+            Cargar: 'cargarBtn',
+            Finalizar: 'finalizarBtn',
+            Guardar_: 'Guardar2Btn',
+            Continuar: 'continuarBtn'
         }
-
-        const clickBoton = botones[boton.trim()]
-        if (clickBoton) {
-            clickBoton()
-            cy.wait(2000)
+        const elementKey = botones[boton.trim()];
+        if (elementKey) {
+            vtaDespCedisPage.clickElement(elementKey);
+            cy.wait(2000); // Considera si realmente necesitas esta espera
         } else {
-            throw new Error(`Botón "${boton}" no reconocido.`)
+            throw new Error(`Botón "${boton}" no reconocido.`);
         }
     } catch (error) {
-        console.error("Error al seleccionar el botón:", error)
-        throw error; // Vuelve a lanzar el error después de registrarlo
+        console.error("Error al seleccionar el botón:", error.message);
+        throw new Error(`Error al hacer clic en el botón: ${boton}. ${error.message}`);
     }
 })
 Then("Ingresamos el código EAN", (table) => {
     table.hashes().forEach((row) => {
-        vtaDespCedisPage.inputEan(row.ean)
+        vtaDespCedisPage.inputText('eanInput', row.ean)
         cy.wait(1000)
-    })
-})
-Then("Seleccionamos el almacen" , (table) => {
-    cy.fixture('datos.json').then((datos) => {
-        this.datos = datos
-        vtaDespCedisPage.selectAlmacen(this.datos.almacen)
     })
 })
 Then("Se ingresa la Cantidad", (table) => {
     table.hashes().forEach((row) => {
-        vtaDespCedisPage.inputCantidad(row.cantidad)
+        vtaDespCedisPage.inputText('cantidadInput',row.cantidad)
         cy.wait(1000)
     })
 })
@@ -292,11 +288,47 @@ Then("Seleccionamos el Delivery" , (table) => {
         cy.wait(1000)
     })
 })
-Then("Se realiza el Registro del Cliente", (table)=>{
+Then("Se realiza el Registro del Cliente", ()=>{
+    cy.fixture('datos.json').then((datos) => {
+        this.datos = datos
+        vtaDespCedisPage.inputText('cedulaInput',this.datos.cedula)
+        vtaDespCedisPage.inputText('nombreInput',this.datos.nombre)
+        vtaDespCedisPage.inputText('telefonoInput',this.datos.telefono)
+        cy.wait(1500)
+    })
+})
+Then("Ingresamos la Cédula del cliente", () => {
+    cy.fixture('datos.json').then((datos) => {
+            this.datos = datos
+            vtaDespCedisPage.inputText('cedulaIdInput',this.datos.cedula)
+            cy.wait(1500)
+        })
+})
+Then("Escaneamos la Factura", (table) => {
     table.hashes().forEach((row) => {
-        vtaDespCedisPage.inputCedula(row.cedula)
-        vtaDespCedisPage.inputNombre(row.nombre)
-        vtaDespCedisPage.inputTelefono(row.telefono)
+        vtaDespCedisPage.inputText('facturaInput',row.factura)
+        cy.wait(1000)
+    })
+})
+Then("Completamos el formulario para el envío a Domicilio", () => {
+    vtaDespCedisPage.clickElement('provinciaBtn')
+    vtaDespCedisPage.clickElement('herreraBtn')
+    cy.wait(1500)
+    vtaDespCedisPage.clickElement('corregimientoBtn')
+    vtaDespCedisPage.clickElement('chitreCoBtn')
+    cy.wait(1500)
+    cy.fixture('datos.json').then((datos) => {
+        this.datos = datos
+        vtaDespCedisPage.inputText('direccionInput',this.datos.direccion)
+        cy.wait(1500)
+    })
+    vtaDespCedisPage.clickElement('calendarioBtn')
+    vtaDespCedisPage.clickElement('fechabtn')
+    cy.wait(1500)
+    cy.fixture('datos.json').then((datos) => {
+        this.datos = datos
+        vtaDespCedisPage.inputObservacion(this.datos.observacion)
+        vtaDespCedisPage.inputText('clienteRecibeInput',this.datos.cliente)
         cy.wait(1500)
     })
 })

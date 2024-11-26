@@ -3,5 +3,11 @@
   "clave": "Shalom2021",
   "recibo": "(//div[@class='card-menu '][contains(.,'Gestión de Recibo')])[1]",
   "bultoDev": "DV000000038085",
-  "almacen": "CEDIS"
+  "almacen": "CEDIS",
+  "cedula": "8-99-887",
+  "nombre": "test 1",
+  "telefono": "6699-8877",
+  "direccion": "calle test34 Ph Test5",
+  "observacion": "Test Vta Despacho desde CEDIS",
+  "cliente": "Jose Perez"
 }

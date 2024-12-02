@@ -15,12 +15,13 @@ class Dev_proveedoresPage {
         gestionInvBtn: () => cy.xpath("//div[@class='card-menu '][contains(.,'Gestión de Inventario')]"),
         listadoDevBtn: () => cy.xpath("//div[@class='card-menu '][contains(.,'Listado Devolución a Proveedores')]"),
         selectEstatus: () => cy.xpath("(//select[contains(@name,'search-estado_str')])"),
+        codigoDescBtn: () => cy.xpath("//th[contains(.,'Código Devolución')]"),
         idDevBtn: () => cy.xpath("/html/body/app-root/block-ui/main/div[3]/div/app-listado-devolucion-proveedor/div/div/div/div/div/app-generic-datatable/div/div/div[2]/div/table/tbody/tr[1]/td[2]/a"),
         anularDevBtn: () => cy.xpath("//button[@class='btn btn-danger'][contains(.,'Anular Devolución')]"),
         anularBtn: () => cy.xpath("(//button[@class='btn btn-danger'])[2]"),
         aduanaDevBtn: () => cy.xpath("//div[@class='card-menu '][contains(.,'Aduana Devolución a Proveedor')]"),
         bultoDevInput: () => cy.xpath("//input[contains(@id,'paleta/bulto')]"),
-        idBultoDevBtn: () => cy.xpath("//a[contains(text(),'6000')]")
+        idBultoDevBtn: () => cy.xpath("//a[contains(text(),'6000')]"),
 
     }
 
@@ -66,6 +67,9 @@ class Dev_proveedoresPage {
     selectEstatus(estatus) {
         this.elements.selectEstatus().should("be.visible").select(estatus)
     }
+    clickCodigoDesc() {
+        this.elements.codigoDescBtn().scrollIntoView().should("be.visible").click()
+    }
     clickIdDev() {
         this.elements.idDevBtn().should("be.visible").click()
     }
@@ -101,6 +105,7 @@ submitDevolucion(area,material,cantidad,impresora,bulto,estatus,bultoD) {
     this.elements.gestionInvBtn().click()
     this.elements.listadoDevBtn().click()
     this.elements.selectEstatus(estatus)
+    this.elements.codigoDescBtn().click()
     this.elements.idDevBtn().click()
     this.elements.anularDevBtn().click()
     this.elements.anularBtn().click()

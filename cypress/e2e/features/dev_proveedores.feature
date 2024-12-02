@@ -85,8 +85,9 @@ Feature: Devolución a Proveedores Nacionales
     And  Filtramos por Estatus
       | estatus               |
       | Pendiente por retirar |
+    And  Le doy click en Código Devolución
     And  Entramos al detalle de la Devolución
-    And le doy click en Anular Devolución
+    And  le doy click en Anular Devolución
     Then le doy click en Anular
     Then Volvemos al inicio
 

@@ -199,6 +199,10 @@ Then("Filtramos por Estatus" , (table) => {
         cy.wait(1000)
     })
 })
+Then("Le doy click en Código Devolución", ()=> {
+    devolucionPage.clickCodigoDesc()
+    cy.wait(1000)
+})
 Then("Entramos al detalle de la Devolución",()=> {
     devolucionPage.clickIdDev()
     cy.wait(1500)
@@ -256,7 +260,8 @@ Then("le damos click en {string}", (boton) => {
             Cargar: 'cargarBtn',
             Finalizar: 'finalizarBtn',
             Guardar_: 'Guardar2Btn',
-            Continuar: 'continuarBtn'
+            Continuar: 'continuarBtn',
+            ID_OT: 'idOtBtn'
         }
         const elementKey = botones[boton.trim()];
         if (elementKey) {
@@ -284,7 +289,7 @@ Then("Se ingresa la Cantidad", (table) => {
 })
 Then("Seleccionamos el Delivery" , (table) => {
     table.hashes().forEach((row) => {
-        vtaDespCedisPage.selectDelivery(row.delivery)
+        vtaDespCedisPage.selectElement('selectDelivery',row.delivery)
         cy.wait(1000)
     })
 })
@@ -331,5 +336,20 @@ Then("Completamos el formulario para el envío a Domicilio", () => {
         vtaDespCedisPage.inputText('clienteRecibeInput',this.datos.cliente)
         cy.wait(1500)
     })
+})
+Then("Entramos en el Listado de Solicitudes",()=> {
+    vtaDespCedisPage.clickElement('listaPreordenBtn')
+    cy.wait(1500)
+})
+Then("Se Filtra por Estatus",(table)=>{
+    table.hashes().forEach((row) => {
+        cy.wait(2000)
+        vtaDespCedisPage.selectElement('selectEstatus', row.estatus)
+        cy.wait(1500)
+    })
+})
+Then("Entramos al detalle de la Pre-Orden",()=> {
+    vtaDespCedisPage.clickElement('idPreOrdenBtn')
+    cy.wait(1500)
 })
 // ########### Fin DEVOLUCION A PROVEEDORES #############################

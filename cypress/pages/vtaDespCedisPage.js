@@ -32,14 +32,18 @@ class VtaDespCedisPage {
         observacionInput: () => cy.xpath("//textarea[@id='observacion']"),
         clienteRecibeInput: () => cy.xpath("//input[@id='cliente_recibe']"),
         Guardar2Btn: () => cy.xpath("(//button[contains(.,'Guardar')])[2]"),
-        continuarBtn: () => cy.xpath("//button[contains(.,'Continuar')]")
+        continuarBtn: () => cy.xpath("//button[contains(.,'Continuar')]"),
+        listaPreordenBtn: () => cy.xpath("(//div[contains(.,'Listado de Solicitudes')])[7]"),
+        selectEstatus:()=>cy.xpath("//select[@name='search-estado_str']"),
+        idPreOrdenBtn:()=>cy.xpath("/html/body/app-root/block-ui/main/div[3]/div/app-pre-orden/div/div/div/div/div/app-generic-datatable/div/div/div[2]/table/tbody/tr[1]/td[2]/a"),
+        idOtBtn:()=>cy.xpath("/html[1]/body[1]/app-root[1]/block-ui[1]/main[1]/div[3]/div[1]/app-pre-orden-consular[1]/div[1]/div[1]/div[1]/div[1]/div[1]/form[1]/div[8]/table[1]/tbody[1]/tr[1]/td[1]/a[1]")
     }
 
-    selectDelivery(delivery) {
-        this.elements.selectDelivery().should("be.visible").select(delivery)
-    }
     inputObservacion(observacion) {
         this.elements.observacionInput().click({ force: true }).type(observacion)
+    }
+    selectElement(element, text) {
+        this.elements[element]().should("be.visible").select(text)
     }
 
     clickElement(element) {
@@ -82,8 +86,12 @@ class VtaDespCedisPage {
         this.inputText('clienteRecibeInput', data.clienteRecibe)
         this.clickElement('Guardar2Btn')
         this.clickElement('continuarBtn')
-        this.elements.selectDelivery().select(delivery)
+        this.selectElement('selectDelivery', data.delivery)
         this.elements.observacionInput().type(observacion)
+        this.clickElement('listaPreordenBtn')
+        this.selectElement('selectEstatus', data.estatus)
+        this.clickElement('idPreOrdenBtn')
+        this.clickElement('idOtBtn')
     }
 }
 export const vtaDespCedisPage = new VtaDespCedisPage()
